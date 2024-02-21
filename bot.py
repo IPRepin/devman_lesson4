@@ -4,18 +4,22 @@ import os
 
 from aiogram import Bot, Dispatcher
 from aiogram.exceptions import TelegramNetworkError
+from aiogram.fsm.storage.redis import RedisStorage
 from dotenv import load_dotenv
 
 from handlers.main_handlers import main_router
+from handlers.question_hendler import router_question
 
 logger = logging.getLogger(__name__)
 
 
-async def on_startup(telegram_token):
+async def on_startup(telegram_token: str) -> None:
+    storage = RedisStorage.from_url("redis://localhost:6379/0")
     bot = Bot(token=telegram_token, parse_mode='HTML')
-    dp = Dispatcher()
+    dp = Dispatcher(storage=storage)
     dp.include_routers(
         main_router,
+        router_question,
     )
     try:
         await bot.delete_webhook(drop_pending_updates=True)
@@ -24,7 +28,7 @@ async def on_startup(telegram_token):
         logger.error(error)
 
 
-def main():
+def main() -> None:
     load_dotenv()
     telegram_token = os.getenv('TELEGRAM_TOKEN')
     logging.basicConfig(
