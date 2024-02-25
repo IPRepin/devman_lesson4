@@ -24,8 +24,17 @@ async def question_next(message: types.Message, state: FSMContext) -> None:
         await state.clear()
 
 
+@router_question.message(F.text == "Сдаться")
+async def surrender(message: types.Message, state: FSMContext) -> None:
+    data = await state.get_data()
+    right_answer = data.get('right_answer')
+    await state.set_state(States.next_answers)
+    await message.answer(f'Правильный ответ: {right_answer}')
+    await question_next(message, state)
+
+
 @router_question.message(States.next_questions)
-async def any_message(message: types.Message, state: FSMContext) -> None:
+async def answer_next_question(message: types.Message, state: FSMContext) -> None:
     data = await state.get_data()
     right_answer = data.get('right_answer')
     await state.update_data(message_answer=message.text)
@@ -37,4 +46,3 @@ async def any_message(message: types.Message, state: FSMContext) -> None:
     else:
         await message.answer("Неправильно. Попробуйте еще раз?",
                              reply_markup=main_keyboard)
-

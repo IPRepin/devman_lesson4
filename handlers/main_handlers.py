@@ -1,5 +1,3 @@
-import random
-
 from aiogram import types, Router, F
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
