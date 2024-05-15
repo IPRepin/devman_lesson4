@@ -14,3 +14,18 @@ def read_quiz_file() -> list:
             answer = answer_match.group(1).strip()
             result.append({"Вопрос": question, "Ответ": answer})
     return result
+
+
+def get_quiz_data():
+    questions = []
+    answers = []
+
+    with open("misc/quiz.txt", 'r', encoding="KOI8-R") as file:
+        data = file.read().split('\n\n')
+        for item in data:
+            if item.startswith('Вопрос'):
+                questions.append(item[8:])
+            elif item.startswith('Ответ'):
+                answers.append(item[7:])
+
+    return questions, answers

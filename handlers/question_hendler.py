@@ -36,12 +36,10 @@ async def surrender(message: types.Message, state: FSMContext) -> None:
 
 @router_question.message(States.next_questions)
 async def answer_next_question(message: types.Message, state: FSMContext) -> None:
-    if message.text == "Мой счет":
-        await score_reply(message, state)
     data = await state.get_data()
     right_answer = data.get('right_answer')
     user_answer = message.text
-    score = data.get("score", 0)  # Получаем значение по умолчанию 0, если нет ключа "score"
+    score = data.get("score", 0)
     if right_answer == user_answer:
         score += 1
         await state.update_data(score=score)
