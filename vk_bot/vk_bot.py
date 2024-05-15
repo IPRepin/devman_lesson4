@@ -4,7 +4,7 @@ import vk_api
 from dotenv import load_dotenv
 from vk_api.longpoll import VkLongPoll, VkEventType
 
-from misc.open_quiz import get_quiz_data
+from misc.open_quiz import get_quiz_data_vk
 from vk_bot.vk_keyboard import main_menu_keyboard
 
 
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     quiz_started = True
     current_question = 0
     score = 0
-    questions, answers = get_quiz_data()
+    questions, answers = get_quiz_data_vk()
     load_dotenv()
     session = vk_api.VkApi(token=os.getenv("VK_TOKEN"))
     main()

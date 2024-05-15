@@ -16,7 +16,7 @@ def read_quiz_file() -> list:
     return result
 
 
-def get_quiz_data():
+def get_quiz_data_vk():
     questions = []
     answers = []
 
