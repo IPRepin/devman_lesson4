@@ -47,7 +47,7 @@
    
    ![screenshot_from_2019-04-29_20-10-16](https://github.com/IPRepin/devnan_support_bot/assets/76727704/4a9487c8-8723-4e9a-a3e9-bffb6067f827)
 
-   * В пункте Сообщения --> Настройки для бота Разрешаем боту отправку сообщений
+   * В пункте Сообщения --> Настройки для бота разрешаем боту отправку сообщений
    
    ![screenshot_from_2019-04-29_20-15-54](https://github.com/IPRepin/devnan_support_bot/assets/76727704/538055b5-77be-4ddc-8a5b-b3e3b4762bcf)
 
