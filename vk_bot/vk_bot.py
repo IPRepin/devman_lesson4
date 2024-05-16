@@ -1,3 +1,4 @@
+import logging
 import os
 
 import vk_api
@@ -80,20 +81,25 @@ def vk_hendler(
 
 
 def main() -> None:
-    for event in VkLongPoll(session).listen():
-        if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-            user_id = event.user_id
-            message = event.text.lower()
-            vk_hendler(
-                questions,
-                answers,
-                current_question,
-                score, quiz_started,
-                user_id, message
-            )
+    logger.info('Start VK bot')
+    try:
+        for event in VkLongPoll(session).listen():
+            if event.type == VkEventType.MESSAGE_NEW and event.to_me:
+                user_id = event.user_id
+                message = event.text.lower()
+                vk_hendler(
+                    questions,
+                    answers,
+                    current_question,
+                    score, quiz_started,
+                    user_id, message
+                )
+    except vk_api.exceptions.VkApiError as e:
+        logger.error(e)
 
 
 if __name__ == "__main__":
+    logger = logging.getLogger(__name__)
     quiz_started = True
     current_question = 0
     score = 0
