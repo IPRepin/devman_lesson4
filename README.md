@@ -1,5 +1,5 @@
-# Бот знакомств для Telegram с функцией сбора данных (анкет) пользователей. #
-# Version 0.4 #
+# Бот для Telegram и ВК викторина для пользователей.  #
+
 
 ![Static Badge](https://img.shields.io/badge/Python-3.11-blue)
 ![Static Badge](https://img.shields.io/badge/Aiogram-3.3.0-blue)
