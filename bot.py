@@ -6,7 +6,8 @@ from aiogram import Bot, Dispatcher
 from aiogram.exceptions import TelegramNetworkError, TelegramRetryAfter
 from aiogram.fsm.storage.redis import RedisStorage
 
-from config import REDIS_URL, TELEGRAM_TOKEN, REDIS_HOST, REDIS_PORT, REDIS_DB
+from config import (REDIS_URL, TELEGRAM_TOKEN,
+                    REDIS_HOST, REDIS_PORT, REDIS_DB)
 from handlers.main_handlers import main_router
 from handlers.question_hendler import router_question
 from misc.logs_hendler_telegram import setup_bot_logger
