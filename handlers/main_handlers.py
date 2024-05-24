@@ -2,7 +2,7 @@ from aiogram import types, Router, F
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 
-from handlers.question_hendler import question_next
+from handlers.question_hendler import get_question_next
 from keyboards.reply_kb import main_keyboard
 
 main_router = Router()
@@ -15,4 +15,4 @@ async def start_command(message: types.Message) -> None:
 
 @main_router.message(F.text == "Новый вопрос")
 async def new_question(message: types.Message, state: FSMContext) -> None:
-    await question_next(message, state)
+    await get_question_next(message, state)

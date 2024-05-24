@@ -11,7 +11,7 @@ from handlers.main_handlers import main_router
 from handlers.question_hendler import router_question
 from misc.logs_hendler_telegram import setup_bot_logger
 from misc.open_quiz import read_quiz_file
-from vk_bot.vk_bot import vk_run
+from vk_bot.vk_bot import run_vk_bot
 
 logger = logging.getLogger(__name__)
 
@@ -45,4 +45,4 @@ def main() -> None:
 if __name__ == '__main__':
     redis_connect = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
     main()
-    vk_run()
+    run_vk_bot()

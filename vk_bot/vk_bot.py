@@ -22,7 +22,7 @@ def send_message(user_id, message, keyboard=None):
     session.method('messages.send', post)
 
 
-def vk_handler(user_id: int, message: str) -> None:
+def get_quiz(user_id: int, message: str) -> None:
     user_key = f"user:{user_id}"
     quiz_start_key = f"{user_key}:quiz_start"
     current_key = f"{user_key}:current"
@@ -59,7 +59,6 @@ def vk_handler(user_id: int, message: str) -> None:
         answer_key = f"quiz:question:{current + 1}:answer"
 
         if redis_connect.exists(question_key):
-            question = redis_connect.get(question_key).decode("utf-8")
             answer = redis_connect.get(answer_key).decode("utf-8")
 
             if message.lower() == 'сдаться':
@@ -114,14 +113,14 @@ def vk_handler(user_id: int, message: str) -> None:
             redis_connect.set(quiz_start_key, False)
 
 
-def vk_run() -> None:
+def run_vk_bot() -> None:
     logger.info('Start VK bot')
     try:
         for event in VkLongPoll(session).listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
                 user_id = event.user_id
                 message = event.text.lower()
-                vk_handler(
+                get_quiz(
                     user_id, message
                 )
     except vk_api.exceptions.VkApiError as e:
