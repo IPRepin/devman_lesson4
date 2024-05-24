@@ -2,8 +2,8 @@ import redis
 from aiogram import types, Router, F
 from aiogram.fsm.context import FSMContext
 
-from bot import redis_connect
 from keyboards.reply_kb import main_keyboard
+from misc.redis_conn import get_redis_conn
 from misc.state import States
 
 router_question = Router()
@@ -11,6 +11,7 @@ router_question = Router()
 
 @router_question.message(F.text == "Новый вопрос")
 async def get_question_next(message: types.Message, state: FSMContext) -> None:
+    redis_connect = get_redis_conn()
     await state.set_state(States.next_questions)
     question_counter = await state.get_data()
     current_value = question_counter.get('current_value', 0)

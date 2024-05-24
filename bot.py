@@ -1,17 +1,16 @@
 import asyncio
 import logging
 
-import redis
 from aiogram import Bot, Dispatcher
 from aiogram.exceptions import TelegramNetworkError, TelegramRetryAfter
 from aiogram.fsm.storage.redis import RedisStorage
 
-from config import (REDIS_URL, TELEGRAM_TOKEN,
-                    REDIS_HOST, REDIS_PORT, REDIS_DB)
+from config import (REDIS_URL, TELEGRAM_TOKEN)
 from handlers.main_handlers import main_router
 from handlers.question_hendler import router_question
 from misc.logs_hendler_telegram import setup_bot_logger
 from misc.open_quiz import read_quiz_file
+from misc.redis_conn import get_redis_conn
 from vk_bot.vk_bot import run_vk_bot
 
 logger = logging.getLogger(__name__)
@@ -34,7 +33,7 @@ async def on_startup(telegram_token: str) -> None:
 
 def main() -> None:
     setup_bot_logger()
-    read_quiz_file(redis_connect)
+    read_quiz_file(get_redis_conn())
     try:
         asyncio.run(on_startup(TELEGRAM_TOKEN))
     except TelegramRetryAfter as retry_error:
@@ -44,6 +43,5 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    redis_connect = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
     main()
     run_vk_bot()
