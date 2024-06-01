@@ -27,12 +27,12 @@ async def get_question_next(message: types.Message, state: FSMContext) -> None:
         await message.answer(f'Вопрос:\n{question}')
     else:
         await message.answer('Вопросы закончились, вы прошли тест!')
-        await is_score_reply(message, state)
+        await scoring_points(message, state)
         await state.clear()
 
 
 @router_question.message(F.text == "Сдаться")
-async def is_surrender(message: types.Message, state: FSMContext) -> None:
+async def processing_surrender_button(message: types.Message, state: FSMContext) -> None:
     data = await state.get_data()
     right_answer = data.get('right_answer')
     await state.set_state(States.next_answers)
@@ -58,7 +58,7 @@ async def get_next_answer(message: types.Message, state: FSMContext) -> None:
 
 
 @router_question.message(F.text == "Мой счет")
-async def is_score_reply(message: types.Message, state: FSMContext) -> None:
+async def scoring_points(message: types.Message, state: FSMContext) -> None:
     data = await state.get_data()
     score = data.get("score", 0)
     await message.answer(f"Ваш счет: {score}", reply_markup=main_keyboard)

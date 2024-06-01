@@ -1,6 +1,8 @@
 import asyncio
 import logging
 
+from dotenv import load_dotenv
+
 from aiogram import Bot, Dispatcher
 from aiogram.exceptions import TelegramNetworkError, TelegramRetryAfter
 from aiogram.fsm.storage.redis import RedisStorage
@@ -32,6 +34,8 @@ async def on_startup(telegram_token: str) -> None:
 
 
 def main() -> None:
+    load_dotenv()
+    run_vk_bot()
     setup_bot_logger()
     read_quiz_file(get_redis_conn())
     try:
@@ -44,4 +48,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-    run_vk_bot()

@@ -22,7 +22,7 @@ def send_message(user_id, message, keyboard=None):
     session.method('messages.send', post)
 
 
-def get_quiz(user_id: int, message: str) -> None:
+def open_questions(user_id: int, message: str) -> None:
     redis_connect = get_redis_conn()
     user_key = f"user:{user_id}"
     quiz_start_key = f"{user_key}:quiz_start"
@@ -121,7 +121,7 @@ def run_vk_bot() -> None:
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
                 user_id = event.user_id
                 message = event.text.lower()
-                get_quiz(
+                open_questions(
                     user_id, message
                 )
     except vk_api.exceptions.VkApiError as e:
