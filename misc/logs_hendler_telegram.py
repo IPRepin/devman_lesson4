@@ -8,14 +8,14 @@ from datetime import datetime
 from logging import LogRecord, Handler
 from logging.handlers import RotatingFileHandler
 
-from config import TELEGRAM_LOGS_TOKEN, TG_CHAT_ID_LOGS, LOGS_PASH
+from config import settings
 
 
 class TelegramBotHandler(Handler):
     def __init__(self):
         super().__init__()
-        self.token = TELEGRAM_LOGS_TOKEN
-        self.chat_id = TG_CHAT_ID_LOGS
+        self.token = settings.TELEGRAM_LOGS_TOKEN
+        self.chat_id = settings.TG_CHAT_ID_LOGS
 
     def emit(self, record: LogRecord) -> None:
         url = f'https://api.telegram.org/bot{self.token}/sendMessage'
@@ -27,7 +27,7 @@ class TelegramBotHandler(Handler):
 
 def setup_bot_logger():
     logging.basicConfig(level=logging.INFO)
-    logs_path = LOGS_PASH
+    logs_path = settings.LOGS_PASH
     if not logs_path:
         logs_path = "logs"
     if not os.path.exists(logs_path):

@@ -1,14 +1,15 @@
 import logging
+import redis
 
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 
-from config import VK_TOKEN
-from misc.redis_conn import get_redis_conn
+from config import settings
+
 from vk_bot.vk_keyboard import main_menu_keyboard
 
 logger = logging.getLogger(__name__)
-session = vk_api.VkApi(token=VK_TOKEN)
+session = vk_api.VkApi(token=settings.VK_TOKEN)
 
 
 def send_message(user_id, message, keyboard=None):
@@ -23,7 +24,9 @@ def send_message(user_id, message, keyboard=None):
 
 
 def open_questions(user_id: int, message: str) -> None:
-    redis_connect = get_redis_conn()
+    redis_connect = redis.Redis(host=settings.REDIS_HOST,
+                                port=settings.REDIS_PORT,
+                                db=settings.REDIS_DB)
     user_key = f"user:{user_id}"
     quiz_start_key = f"{user_key}:quiz_start"
     current_key = f"{user_key}:current"
